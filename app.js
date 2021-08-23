@@ -31,23 +31,26 @@ function formatAndSendTweet(event) {
 // Then pass those events over to the formatter before tweeting
 setInterval(() => {
     const lastMinute = moment().startOf('minute').subtract(59, "seconds").unix();
+    
+    for(var i=0 ; i < 1000 ; i++){
+        axios.get('https://api.opensea.io/api/v1/events', {
+            params: {
+                asset_contract_address: process.env.ASSSET_CONTRACT_ADDRESS,
+                token_id: 100000000 + i,
+                event_type: 'successful',
+                occurred_after: lastMinute,
+                only_opensea: 'false'
+            }
+        }).then((response) => {
+            const events = _.get(response, ['data', 'asset_events']);
 
-    axios.get('https://api.opensea.io/api/v1/events', {
-        params: {
-            collection_slug: process.env.OPENSEA_COLLECTION_SLUG,
-            event_type: 'successful',
-            occurred_after: lastMinute,
-            only_opensea: 'false'
-        }
-    }).then((response) => {
-        const events = _.get(response, ['data', 'asset_events']);
+            console.log(`${events.length} sales in the last minute...`);
 
-        console.log(`${events.length} sales in the last minute...`);
-
-        _.each(events, (event) => {
-            return formatAndSendTweet(event);
+            _.each(events, (event) => {
+                return formatAndSendTweet(event);
+            });
+        }).catch((error) => {
+            console.error(error);
         });
-    }).catch((error) => {
-        console.error(error);
-    });
+    }
 }, 60000);
