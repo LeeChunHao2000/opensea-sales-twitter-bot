@@ -34,7 +34,7 @@ setInterval(() => {
     
     axios.get('https://api.opensea.io/api/v1/events', {
         params: {
-            asset_contract_address: process.env.ASSSET_CONTRACT_ADDRESS,
+            collection_slug: process.env.OPENSEA_COLLECTION_SLUG,
             event_type: 'successful',
             occurred_after: lastMinute,
             only_opensea: 'false'
