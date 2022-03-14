@@ -48,7 +48,7 @@ setInterval(() => {
 
     axios.get('https://api.opensea.io/api/v1/events', {
         headers: {
-            'Accept': application/json',
+            'Accept': 'application/json',
             'X-API-KEY': process.env.X_API_KEY
         },
         params: {
