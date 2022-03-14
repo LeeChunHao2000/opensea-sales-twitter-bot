@@ -49,7 +49,8 @@ setInterval(() => {
     axios.get('https://api.opensea.io/api/v1/events', {
         headers: {
             'Accept': 'application/json',
-            'X-API-KEY': process.env.X_API_KEY
+            'X-API-KEY': process.env.X_API_KEY,
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/604.5.6 (KHTML, like Gecko) Version/11.0.3 Safari/604.5.6'
         },
         params: {
             collection_slug: process.env.OPENSEA_COLLECTION_SLUG,
